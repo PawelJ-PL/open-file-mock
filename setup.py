@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 here = path.abspath(path.dirname(__file__))
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 # TODO: version should be generated
 
 with open(path.join(here, 'README.md')) as f:
@@ -16,7 +16,7 @@ setup(
     version=VERSION,
     description='Smart object for mocking open file calls, depends on file path',
     long_description=long_description,
-    url='https://github.com/PawelJ-PL/open_file_mock',
+    url='https://github.com/PawelJ-PL/open-file-mock',
     author='Pawel',
     author_email='inne.poczta@gmail.com',
     license='MIT',
