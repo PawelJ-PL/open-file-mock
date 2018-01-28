@@ -14,7 +14,7 @@ class MockOpen:
 
     def register_object_for_path(self, path, obj):
         if path in self._path_mappings.keys():
-            raise ValueError('Path {0} alredy registered with object {1}'.format(path, self._path_mappings[path]))
+            raise ValueError('Path {0} already registered with object {1}'.format(path, self._path_mappings[path]))
         self.update_object_for_path(path, obj)
 
     def update_object_for_path(self, path, obj):

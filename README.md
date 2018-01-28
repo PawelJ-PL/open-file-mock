@@ -3,9 +3,9 @@
 ## Description
 This library contains object, which can be used during mocking files in tests. Features:
 
-* You can register different actions (provide different objects for different paths) for different paths
-* You can add content, which will be
-* You can select behavior for paths, which is not registered. Supported behaviors:
+* You can register different actions (provide different objects) for different paths
+* You can add text, which will be returned on read
+* You can select behavior for paths, which are not registered. Supported behaviors:
     * Raise FileNotFoundError exception (default behavior)
     * Return original file from filesystem
     * Return mock object
@@ -24,7 +24,7 @@ Mock open first file with custom object, second one with string data and raise F
 
 ```python
 from unittest.mock import patch
-from open_file_mock.mock_open import MockOpen
+from open_file_mock import MockOpen
 
 
 class FileObject:
@@ -76,7 +76,7 @@ Set default behavior (for not registered paths) to return original file:
 
 ```python
 from unittest.mock import patch, MagicMock
-from open_file_mock.mock_open import MockOpen, DEFAULTS_ORIGINAL
+from open_file_mock import MockOpen, DEFAULTS_ORIGINAL
 
 with patch('builtins.open', new_callable=MockOpen) as open_mock:
     open_mock.default_behavior = DEFAULTS_ORIGINAL
@@ -95,7 +95,7 @@ with patch('builtins.open', new_callable=MockOpen) as open_mock:
 ```
 <MagicMock name='mock.__enter__().read()' id='...'>
 ----------------------
-myhostname
+myhost
 
 ----------------------
 
@@ -105,7 +105,7 @@ Set default behavior to return new mock:
 
 ```python
 from unittest.mock import patch
-from open_file_mock.mock_open import MockOpen, DEFAULTS_MOCK
+from open_file_mock import MockOpen, DEFAULTS_MOCK
 
 with patch('builtins.open', new_callable=MockOpen) as open_mock:
     open_mock.default_behavior = DEFAULTS_MOCK
@@ -120,18 +120,20 @@ with patch('builtins.open', new_callable=MockOpen) as open_mock:
 
 ```
 
+
 **output:**
 ```
 QWERTY
 ----------------------
 <MagicMock name='mock.__enter__().read()' id='...'>
+----------------------
 ```
 
 Yoy can get registered object with *get_object_for_path* method:
 
 ```python
 from unittest.mock import patch
-from open_file_mock.mock_open import MockOpen
+from open_file_mock import MockOpen
 
 
 class FileObject:

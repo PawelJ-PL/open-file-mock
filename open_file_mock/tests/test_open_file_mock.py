@@ -4,7 +4,7 @@ from tempfile import mkstemp
 import io
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
-from open_file_mock.mock_open import MockOpen, DEFAULTS_MOCK, DEFAULTS_ORIGINAL, DEFAULTS_EXCEPTION
+from open_file_mock import MockOpen, DEFAULTS_MOCK, DEFAULTS_ORIGINAL, DEFAULTS_EXCEPTION
 import open_file_mock.tests as test_module
 
 
@@ -31,7 +31,7 @@ class TestOpenFileMock(TestCase):
     @patch('builtins.open', new_callable=MockOpen)
     def test_should_raise_exception_when_file_not_found_and_default_settings_with_context_manger(self, open_mock):
         with self.assertRaisesRegex(FileNotFoundError, 'File /path/to/file not found in mock function'):
-            with open('/path/to/file') as f:
+            with open('/path/to/file'):
                 pass
 
     @patch('builtins.open', new_callable=MockOpen)
@@ -41,7 +41,7 @@ class TestOpenFileMock(TestCase):
 
         # when
         with self.assertRaisesRegex(FileNotFoundError, 'File /path/to/file not found in mock function'):
-            with open('/path/to/file') as f:
+            with open('/path/to/file'):
                 pass
 
     @patch('builtins.open', new_callable=MockOpen)
@@ -82,7 +82,7 @@ class TestOpenFileMock(TestCase):
 
         # when
         with self.assertRaisesRegex(FileNotFoundError, "No such file or directory: '/path/to/file'"):
-            with open('/path/to/file') as f:
+            with open('/path/to/file'):
                 pass
 
     @patch('builtins.open', new_callable=MockOpen)
@@ -122,7 +122,7 @@ class TestOpenFileMock(TestCase):
 
         # when
         with self.assertRaisesRegex(RuntimeError, 'Both open and io.open already patched'):
-            with io.open(file_path) as f:
+            with io.open(file_path):
                 pass
 
     @patch('io.open', new_callable=MockOpen)
@@ -134,7 +134,7 @@ class TestOpenFileMock(TestCase):
 
         # when
         with self.assertRaisesRegex(RuntimeError, 'Both open and io.open already patched'):
-            with open(file_path) as f:
+            with open(file_path):
                 pass
 
     @patch('builtins.open', new_callable=MockOpen)
@@ -173,7 +173,7 @@ class TestOpenFileMock(TestCase):
         open_mock.register_object_for_path('/path/to/file', 'ABC')
 
         # when
-        with self.assertRaisesRegex(ValueError, 'Path /path/to/file alredy registered with object ABC'):
+        with self.assertRaisesRegex(ValueError, 'Path /path/to/file already registered with object ABC'):
             open_mock.register_object_for_path('/path/to/file', 'XYZ')
 
     @patch('builtins.open', new_callable=MockOpen)
@@ -238,7 +238,7 @@ class TestOpenFileMock(TestCase):
         open_mock.register_object_for_path('/path/to/file', 'ABC')
 
         # when
-        with self.assertRaisesRegex(ValueError, 'Path /path/to/file alredy registered with object ABC'):
+        with self.assertRaisesRegex(ValueError, 'Path /path/to/file already registered with object ABC'):
             open_mock.set_read_data_for('/path/to/file', return_data)
 
     @patch('builtins.open', new_callable=MockOpen)
